@@ -1,18 +1,59 @@
-var request = require('request');
-var cheerio = require('cheerio');
-var fs      = require('fs');
+var request   = require('request');
+var cheerio   = require('cheerio');
+var async     = require('async');
+var fs        = require('fs');
 
+var start_av  = 35000;
+var end_av    = 7350000;
+var min_click = 1000000;
 
+var avUrls    = new Array();
 
-
-var option = {
-	url: "http://music.163.com/weapi/v1/resource/comments/R_SO_4_407761576/?csrf_token="
+for(var i = start_av; i <= end_av; i++) {
+	avUrls.push("http://interface.bilibili.com/player?id=cid:12039653&aid="+i);
 }
-request.post('http://music.163.com/weapi/v1/resource/comments/R_SO_4_407761576/?csrf_token=', function(err,result){
+var saveFile = function(aid,click,favourites,coins) {
+	fs.appendFile('result.txt', 
+		'av'+aid+'\t'+
+		'点击数: '+click+'\t'+
+		'收藏: '+favourites+'\t'+
+		'硬币: '+coins+'\n'
+		, 'utf-8', function (err) {
+	    if (err) {
+	        console.log(err);
+	        console.log("fs ERROR !");
+	    } else {
+	    	console.log("av"+aid+'------已写入');
+	    }
+	});
+} 
+var requestAndWrite = function(url,callback){
+	request(url, function(err,result){
+		if(err){
+			console.log(err);
+			console.log("request ERROR !");
+		} else {
+			var body       = result.body;
+			var $          = cheerio.load(body);
+			var aid        = $('aid').text();
+			var click      = $('click').text();
+			var favourites = $('favourites').text();
+			var coins      = $('coins').text();
+			if(aid != ""&&click > min_click) {
+				saveFile(aid,click,favourites,coins);
+			}
+			callback(null,"successful !");
+		}
+	})
+}
+
+async.mapLimit(avUrls,9,function(url,callback){
+    requestAndWrite(url,callback);
+},function(err,result){
 	if(err) {
-		console.log("抓取失败");
 		console.log(err);
+		console.log("并发 ERROR !");
 	} else {
-		console.log(result._readableState.highWaterMark);
+		console.log("全部抓取完毕！");
 	}
 })
