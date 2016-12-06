@@ -3,7 +3,7 @@ var cheerio   = require('cheerio');
 var async     = require('async');
 var fs        = require('fs');
 
-var start_av  = 99585;
+var start_av  = 475700;
 var end_av    = 7350000;
 var min_click = 1000000;
 
@@ -17,21 +17,24 @@ var saveFile = function(aid,click,favourites,coins) {
 		'av'+aid+'\t'+
 		'点击数: '+click+'\t'+
 		'收藏: '+favourites+'\t'+
-		'硬币: '+coins+'\n'
-		, 'utf-8', function (err) {
-	    if (err) {
-	        console.log(err);
-	        console.log("fs ERROR !");
-	    } else {
-	    	console.log("av"+aid+'------已写入');
-	    }
-	});
+		'硬币: '+coins+'\n',
+		'utf-8',
+		function (err) {
+		    if (err) {
+		        console.log(err);
+		        console.log("fs ERROR !");
+		    } else {
+		    	console.log("av"+aid+'------已写入');
+		    }
+		}
+	);
 } 
 var requestAndWrite = function(url,callback){
 	request(url, function(err,result){
 		if(err){
 			console.log(err);
 			console.log("request ERROR !");
+			callback(null,"successful !");
 		} else {
 			var body       = result.body;
 			var $          = cheerio.load(body);
