@@ -2,24 +2,37 @@ var fs  = require('fs');
 var cmp = require('./cmp');
 
 
-var topHow = 10;
+var topHowMany = 10;
 
 var saveList = function(list) {
-	console.log(list.listName);
-	for(var i = 0;i < topHow;i++) {
-		console.log(list[i]);
+	for(var i = 0;i < topHowMany;i++) {
+		var text = JSON.stringify(list[i])
+			.replace(/{"aid":/g,"av")
+			.replace(/,"click":/g,"\t点击数: ")
+			.replace(/,"favourites":/g,"\t收藏: ")
+			.replace(/,"coins":/g,"\t硬币: ")
+			.replace(/}/g,"\n");
+		fs.appendFile(list.listName+'.txt',text,'utf-8',function(err){
+			if(err) {
+				console.log(err);
+				console.log("printList ERROR !");
+			} else {
+				console.log("榜单写入完毕!");
+			}
+		})
 	}
 }
 
 var reorder = function(aidList) {
-	var clickList      = aidList.sort(cmp.orderByClick);
-	clickList.listName = "clickList";
+	var coinsList           = aidList.sort(cmp.orderByCoins);
+	coinsList.listName      = "coinsList";
+	saveList(coinsList);
+	var clickList           = aidList.sort(cmp.orderByClick);
+	clickList.listName      = "clickList";
 	saveList(clickList);
-	var favouritesList = aidList.sort(cmp.orderByFavourites);
+	var favouritesList      = aidList.sort(cmp.orderByFavourites);
 	favouritesList.listName = "favouritesList";
 	saveList(favouritesList);
-	var coinsList      = aidList.sort(cmp.orderByCoins);
-	saveList(coinsList);
 }
  
 var load = function() {
