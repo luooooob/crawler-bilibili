@@ -3,7 +3,7 @@ var cheerio   = require('cheerio');
 var async     = require('async');
 var fs        = require('fs');
 
-var start_av  = 35000;
+var start_av  = 99585;
 var end_av    = 7350000;
 var min_click = 1000000;
 
@@ -39,6 +39,7 @@ var requestAndWrite = function(url,callback){
 			var click      = $('click').text();
 			var favourites = $('favourites').text();
 			var coins      = $('coins').text();
+			console.log('正在抓取------av'+aid)
 			if(aid != ""&&click > min_click) {
 				saveFile(aid,click,favourites,coins);
 			}
@@ -47,7 +48,7 @@ var requestAndWrite = function(url,callback){
 	})
 }
 
-async.mapLimit(avUrls,9,function(url,callback){
+async.mapLimit(avUrls,5,function(url,callback){
     requestAndWrite(url,callback);
 },function(err,result){
 	if(err) {
