@@ -3,8 +3,8 @@ var cheerio   = require('cheerio');
 var async     = require('async');
 var fs        = require('fs');
 
-var start_av  = 775048;
-var end_av    = 7350000;
+var start_av  = 3805384;
+var end_av    = 5000000;
 var min_click = 1000000;
 
 var avUrls    = new Array();

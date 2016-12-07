@@ -1,6 +1,0 @@
-  [
-  '{aid: 288567, click: 1036042, favourites: 2769, coins: 1077}',
-  '{aid: 296938, click: 1176379, favourites: 31564, coins: 4399}',
-  '{aid: 304590, click: 1071447, favourites: 36646, coins: 10008}',
-  '{aid: 306387, click: 1724172, favourites: 3147, coins: 1112}',
-  '{aid: 345660, click: 2195679, favourites: 156529, coins: 78608}']
