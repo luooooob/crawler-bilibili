@@ -1,8 +1,8 @@
 {
-  "name": "spider_2_wangyiyun",
+  "name": "spider_2_bilibili",
   "version": "1.0.0",
   "description": "A spider program in order to find some songs",
-  "main": "start.js",
+  "main": "spider.js",
   "dependencies": {
     "ansi-styles": "^2.2.1",
     "ansi-regex": "^2.0.0",
@@ -71,5 +71,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "riverry",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Riverry/spider-2-bilibili.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Riverry/spider-2-bilibili/issues"
+  },
+  "homepage": "https://github.com/Riverry/spider-2-bilibili#readme"
 }
