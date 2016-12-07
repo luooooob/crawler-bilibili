@@ -3,7 +3,7 @@ var cheerio   = require('cheerio');
 var async     = require('async');
 var fs        = require('fs');
 
-var start_av  = 3805384;
+var start_av  = 3885018;
 var end_av    = 5000000;
 var min_click = 1000000;
 
@@ -59,5 +59,6 @@ async.mapLimit(avUrls,5,function(url,callback){
 		console.log("并发 ERROR !");
 	} else {
 		console.log("全部抓取完毕！");
+
 	}
 })
